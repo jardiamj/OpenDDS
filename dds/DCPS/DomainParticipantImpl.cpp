@@ -1251,10 +1251,11 @@ DomainParticipantImpl::ignore_participant(
   }
 
   if (DCPS_debug_level >= 4) {
+    GuidConverter converter(dp_id_);
     ACE_DEBUG((LM_DEBUG,
                ACE_TEXT("(%P|%t) DomainParticipantImpl::ignore_participant: ")
                ACE_TEXT("%C ignoring handle %x.\n"),
-               LogGuid(dp_id_).c_str(),
+               OPENDDS_STRING(converter).c_str(),
                handle));
   }
 
@@ -1272,10 +1273,11 @@ DomainParticipantImpl::ignore_participant(
 
 
   if (DCPS_debug_level >= 4) {
+    GuidConverter converter(dp_id_);
     ACE_DEBUG((LM_DEBUG,
                ACE_TEXT("(%P|%t) DomainParticipantImpl::ignore_participant: ")
                ACE_TEXT("%C repo call returned.\n"),
-               LogGuid(dp_id_).c_str()));
+               OPENDDS_STRING(converter).c_str()));
   }
 
   return DDS::RETCODE_OK;
@@ -1311,10 +1313,11 @@ DomainParticipantImpl::ignore_topic(
   }
 
   if (DCPS_debug_level >= 4) {
+    GuidConverter converter(dp_id_);
     ACE_DEBUG((LM_DEBUG,
                ACE_TEXT("(%P|%t) DomainParticipantImpl::ignore_topic: ")
                ACE_TEXT("%C ignoring handle %x.\n"),
-               LogGuid(dp_id_).c_str(),
+               OPENDDS_STRING(converter).c_str(),
                handle));
   }
 
@@ -1352,10 +1355,11 @@ DomainParticipantImpl::ignore_publication(
   }
 
   if (DCPS_debug_level >= 4) {
+    GuidConverter converter(dp_id_);
     ACE_DEBUG((LM_DEBUG,
                ACE_TEXT("(%P|%t) DomainParticipantImpl::ignore_publication: ")
                ACE_TEXT("%C ignoring handle %x.\n"),
-               LogGuid(dp_id_).c_str(),
+               OPENDDS_STRING(converter).c_str(),
                handle));
   }
 
@@ -1395,10 +1399,11 @@ DomainParticipantImpl::ignore_subscription(
   }
 
   if (DCPS_debug_level >= 4) {
+    GuidConverter converter(dp_id_);
     ACE_DEBUG((LM_DEBUG,
                ACE_TEXT("(%P|%t) DomainParticipantImpl::ignore_subscription: ")
                ACE_TEXT("%C ignoring handle %d.\n"),
-               LogGuid(dp_id_).c_str(),
+               OPENDDS_STRING(converter).c_str(),
                handle));
   }
 
@@ -1860,7 +1865,7 @@ DomainParticipantImpl::enable()
   if (DCPS_debug_level > 1) {
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) DomainParticipantImpl::enable: ")
                ACE_TEXT("enabled participant %C in domain %d\n"),
-               LogGuid(dp_id_).c_str(), domain_id_));
+               OPENDDS_STRING(GuidConverter(dp_id_)).c_str(), domain_id_));
   }
 
   if (ret == DDS::RETCODE_OK && !TheTransientKludge->is_enabled()) {

@@ -405,12 +405,14 @@ ReplayerImpl::add_association(const RepoId&            yourId,
   DBG_ENTRY_LVL("ReplayerImpl", "add_association", 6);
 
   if (DCPS_debug_level >= 1) {
+    GuidConverter writer_converter(yourId);
+    GuidConverter reader_converter(reader.readerId);
     ACE_DEBUG((LM_DEBUG,
                ACE_TEXT("(%P|%t) ReplayerImpl::add_association - ")
                ACE_TEXT("bit %d local %C remote %C\n"),
                is_bit_,
-               LogGuid(yourId).c_str(),
-               LogGuid(reader.readerId).c_str()));
+               OPENDDS_STRING(writer_converter).c_str(),
+               OPENDDS_STRING(reader_converter).c_str()));
   }
 
   // if (entity_deleted_ == true) {
@@ -435,10 +437,11 @@ ReplayerImpl::add_association(const RepoId&            yourId,
   }
 
   if (DCPS_debug_level > 4) {
+    GuidConverter converter(publication_id_);
     ACE_DEBUG((LM_DEBUG,
                ACE_TEXT("(%P|%t) ReplayerImpl::add_association(): ")
                ACE_TEXT("adding subscription to publication %C with priority %d.\n"),
-               LogGuid(publication_id_).c_str(),
+               OPENDDS_STRING(converter).c_str(),
                qos_.transport_priority.value));
   }
 
@@ -495,10 +498,11 @@ ReplayerImpl::association_complete_i(const RepoId& remote_id)
   {
     ACE_GUARD(ACE_Recursive_Thread_Mutex, guard, this->lock_);
     if (OpenDDS::DCPS::insert(readers_, remote_id) == -1) {
+      GuidConverter converter(remote_id);
       ACE_ERROR((LM_ERROR,
                  ACE_TEXT("(%P|%t) ERROR: ReplayerImpl::association_complete_i: ")
                  ACE_TEXT("insert %C from pending failed.\n"),
-                 LogGuid(remote_id).c_str()));
+                 OPENDDS_STRING(converter).c_str()));
     }
     // RepoIdToReaderInfoMap::const_iterator it = reader_info_.find(remote_id);
     // if (it != reader_info_.end()) {
@@ -521,18 +525,20 @@ ReplayerImpl::association_complete_i(const RepoId& remote_id)
       ++publication_match_status_.current_count_change;
 
       if (OpenDDS::DCPS::bind(id_to_handle_map_, remote_id, handle) != 0) {
+        GuidConverter converter(remote_id);
         ACE_DEBUG((LM_WARNING,
                    ACE_TEXT("(%P|%t) ERROR: ReplayerImpl::association_complete_i: ")
                    ACE_TEXT("id_to_handle_map_%C = 0x%x failed.\n"),
-                   LogGuid(remote_id).c_str(),
+                   OPENDDS_STRING(converter).c_str(),
                    handle));
         return;
 
       } else if (DCPS_debug_level > 4) {
+        GuidConverter converter(remote_id);
         ACE_DEBUG((LM_DEBUG,
                    ACE_TEXT("(%P|%t) ReplayerImpl::association_complete_i: ")
                    ACE_TEXT("id_to_handle_map_%C = 0x%x.\n"),
-                   LogGuid(remote_id).c_str(),
+                   OPENDDS_STRING(converter).c_str(),
                    handle));
       }
 
@@ -560,12 +566,14 @@ ReplayerImpl::remove_associations(const ReaderIdSeq & readers,
                                   CORBA::Boolean      notify_lost)
 {
   if (DCPS_debug_level >= 1) {
+    GuidConverter writer_converter(publication_id_);
+    GuidConverter reader_converter(readers[0]);
     ACE_DEBUG((LM_DEBUG,
                ACE_TEXT("(%P|%t) ReplayerImpl::remove_associations: ")
                ACE_TEXT("bit %d local %C remote %C num remotes %d\n"),
                is_bit_,
-               LogGuid(publication_id_).c_str(),
-               LogGuid(readers[0]).c_str(),
+               OPENDDS_STRING(writer_converter).c_str(),
+               OPENDDS_STRING(reader_converter).c_str(),
                readers.length()));
   }
 
@@ -783,12 +791,14 @@ ReplayerImpl::data_delivered(const DataSampleElement* sample)
 {
   DBG_ENTRY_LVL("ReplayerImpl","data_delivered",6);
   if (!(sample->get_pub_id() == this->publication_id_)) {
+    GuidConverter sample_converter(sample->get_pub_id());
+    GuidConverter writer_converter(publication_id_);
     ACE_ERROR((LM_ERROR,
                ACE_TEXT("(%P|%t) ERROR: ReplayerImpl::data_delivered: ")
                ACE_TEXT(" The publication id %C from delivered element ")
                ACE_TEXT("does not match the datawriter's id %C\n"),
-               LogGuid(sample->get_pub_id()).c_str(),
-               LogGuid(publication_id_).c_str()));
+               OPENDDS_STRING(sample_converter).c_str(),
+               OPENDDS_STRING(writer_converter).c_str()));
     return;
   }
   DataSampleElement* elem = const_cast<DataSampleElement*>(sample);
@@ -1012,7 +1022,7 @@ ReplayerImpl::lookup_instance_handles(const ReaderIdSeq&       ids,
     OPENDDS_STRING buffer;
 
     for (CORBA::ULong i = 0; i < num_rds; ++i) {
-      buffer += separator + LogGuid(ids[i]).conv_;
+      buffer += separator + OPENDDS_STRING(GuidConverter(ids[i]));
       separator = ", ";
     }
 

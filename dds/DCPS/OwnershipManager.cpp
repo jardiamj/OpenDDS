@@ -390,11 +390,12 @@ OwnershipManager::broadcast_new_owner(const DDS::InstanceHandle_t& instance_hand
     // This may not be an error since it could happen that the sample
     // is delivered to the datareader after the write is dis-associated
     // with this datareader.
+    GuidConverter writer_converter(owner);
     ACE_DEBUG((LM_DEBUG,
                ACE_TEXT("(%P|%t) OwnershipManager::broadcast_new_owner: ")
                ACE_TEXT("owner writer %C, instance handle %d strength %d num ")
                ACE_TEXT("of candidates %d\n"),
-               LogGuid(owner).c_str(), instance_handle,
+               OPENDDS_STRING(writer_converter).c_str(), instance_handle,
                infos.owner_.ownership_strength_,
                (int)infos.candidates_.size()));
   }

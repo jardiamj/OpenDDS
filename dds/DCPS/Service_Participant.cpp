@@ -1205,10 +1205,11 @@ Service_Participant::set_repo_domain(const DDS::DomainId_t domain,
               repoList.push_back(std::make_pair(disc_iter->second, id));
 
               if (DCPS_debug_level > 0) {
+                GuidConverter converter(id);
                 ACE_DEBUG((LM_DEBUG,
                            ACE_TEXT("(%P|%t) Service_Participant::set_repo_domain: ")
                            ACE_TEXT("participant %C attached to Repo[ %C].\n"),
-                           LogGuid(id).c_str(),
+                           OPENDDS_STRING(converter).c_str(),
                            key.c_str()));
               }
 
@@ -1226,11 +1227,12 @@ Service_Participant::set_repo_domain(const DDS::DomainId_t domain,
   // Make all of the remote calls after releasing the lock.
   for (unsigned int index = 0; index < repoList.size(); ++index) {
     if (DCPS_debug_level > 0) {
+      GuidConverter converter(repoList[ index].second);
       ACE_DEBUG((LM_DEBUG,
                  ACE_TEXT("(%P|%t) Service_Participant::set_repo_domain: ")
                  ACE_TEXT("(%d of %d) attaching domain %d participant %C to Repo[ %C].\n"),
                  (1+index), repoList.size(), domain,
-                 LogGuid(repoList[ index].second).c_str(),
+                 OPENDDS_STRING(converter).c_str(),
                  key.c_str()));
     }
 
