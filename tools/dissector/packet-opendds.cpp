@@ -398,10 +398,9 @@ namespace OpenDDS
         reinterpret_cast<const guint8*>(&sample.publication_id_);
       if (sample.message_id_ != TRANSPORT_CONTROL)
         {
-          GuidConverter converter (sample.publication_id_);
           proto_tree_add_bytes_format_value (ltree, hf_sample_publication,
                                              tvb_, offset, len, data_ptr, "%s",
-                                             std::string(converter).c_str());
+                                             LogGuid(sample.publication_id_).c_str());
         }
       offset += len;
 
@@ -413,11 +412,10 @@ namespace OpenDDS
           data_ptr = reinterpret_cast<const guint8*>(&sample.publisher_id_);
           if (sample.message_id_ != DCPS::TRANSPORT_CONTROL)
             {
-              DCPS::GuidConverter converter(sample.publisher_id_);
               proto_tree_add_bytes_format_value (ltree, hf_sample_publisher,
                                                  tvb_, offset, len,
                                                  data_ptr, "%s",
-                                                 std::string(converter).c_str()
+                                                 LogGuid(sample.publisher_id_).c_str()
                                                  );
             }
           offset += len;
@@ -444,9 +442,8 @@ namespace OpenDDS
                 {
                   // Get Entry Value
                   const GUID_t &filter = sample.content_filter_entries_[i];
-                  DCPS::GuidConverter converter(filter);
                   std::stringstream strm;
-                  strm << converter;
+                  strm << LogGuid(filter);
                   std::string guid = strm.str();
 
                   // Get Entry Size
@@ -504,8 +501,6 @@ namespace OpenDDS
           return;
         }
 
-      GuidConverter converter(header.publication_id_);
-
       if (header.cdr_encapsulation_) {
         ACE_DEBUG ((LM_DEBUG,
                     "DDS_Dissector::dissect_sample_payload: "
@@ -536,7 +531,7 @@ namespace OpenDDS
         ACE_DEBUG ((LM_DEBUG,
                     "DDS_Dissector::dissect_sample_payload: "
                     "couldn't dissect payload: no topic for %C\n",
-                    std::string(converter).c_str()));
+                    LogGuid(header.publication_id_).c_str()));
 
         // Mark Packet
 #ifndef NO_EXPERT
