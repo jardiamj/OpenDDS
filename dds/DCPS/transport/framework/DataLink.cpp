@@ -381,13 +381,13 @@ DataLink::make_reservation(const RepoId& remote_subscription_id,
   DBG_ENTRY_LVL("DataLink", "make_reservation", 6);
 
   if (DCPS_debug_level > 9) {
-    GuidConverter local(local_publication_id), remote(remote_subscription_id);
+    LogGuid local(local_publication_id), remote(remote_subscription_id);
     ACE_DEBUG((LM_DEBUG,
                ACE_TEXT("(%P|%t) DataLink::make_reservation() - ")
                ACE_TEXT("creating association local publication  %C ")
                ACE_TEXT("<--> with remote subscription %C.\n"),
-               OPENDDS_STRING(local).c_str(),
-               OPENDDS_STRING(remote).c_str()));
+               local.c_str(),
+               remote.c_str()));
   }
 
   TransportSendStrategy_rch strategy = get_send_strategy();

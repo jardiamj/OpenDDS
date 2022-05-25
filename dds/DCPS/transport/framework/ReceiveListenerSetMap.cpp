@@ -30,12 +30,12 @@ OpenDDS::DCPS::ReceiveListenerSetMap::insert
 
   if (listener_set.is_nil()) {
     // find_or_create failure
-    GuidConverter converter(publisher_id);
+    LogGuid converter(publisher_id);
     ACE_ERROR_RETURN((LM_ERROR,
                       ACE_TEXT("(%P|%t) ERROR: ReceiveListenerSetMap::insert: ")
                       ACE_TEXT("failed to find_or_create entry for ")
                       ACE_TEXT("publisher %C.\n"),
-                      OPENDDS_STRING(converter).c_str()), -1);
+                      converter.c_str()), -1);
   }
 
   int result = listener_set->insert(subscriber_id, receive_listener);
@@ -44,14 +44,14 @@ OpenDDS::DCPS::ReceiveListenerSetMap::insert
     return 0;
   }
 
-  GuidConverter sub_converter(subscriber_id);
-  GuidConverter pub_converter(publisher_id);
+  LogGuid sub_converter(subscriber_id);
+  LogGuid pub_converter(publisher_id);
   ACE_ERROR((LM_ERROR,
              ACE_TEXT("(%P|%t) ERROR: ReceiveListenerSetMap::insert: ")
              ACE_TEXT("failed to insert subscriber %C for ")
              ACE_TEXT("publisher %C.\n"),
-             OPENDDS_STRING(sub_converter).c_str(),
-             OPENDDS_STRING(pub_converter).c_str()));
+             sub_converter.c_str(),
+             pub_converter.c_str()));
 
   // Deal with possibility that the listener_set just got
   // created - and just for us.  This is to make sure we don't leave any
@@ -89,12 +89,12 @@ OpenDDS::DCPS::ReceiveListenerSetMap::remove(RepoId publisher_id,
 
   if (listener_set->size() == 0) {
     if (unbind(map_, publisher_id) != 0) {
-      GuidConverter converter(publisher_id);
+      LogGuid converter(publisher_id);
       ACE_ERROR_RETURN((LM_ERROR,
                         ACE_TEXT("(%P|%t) ERROR: ReceiveListenerSetMap::remove: ")
                         ACE_TEXT("failed to remove empty ReceiveListenerSet for ")
                         ACE_TEXT("publisher %C.\n"),
-                        OPENDDS_STRING(converter).c_str()), -1);
+                        converter.c_str()), -1);
     }
   }
 
@@ -140,12 +140,12 @@ OpenDDS::DCPS::ReceiveListenerSetMap::release_subscriber(RepoId publisher_id,
 
   if (listener_set->size() == 0) {
     if (unbind(map_, publisher_id) != 0) {
-      GuidConverter converter(publisher_id);
+      LogGuid converter(publisher_id);
       ACE_ERROR((LM_ERROR,
                  ACE_TEXT("(%P|%t) ERROR: ReceiveListenerSetMap::release_subscriber: ")
                  ACE_TEXT("failed to remove empty ReceiveListenerSet for ")
                  ACE_TEXT("publisher %C.\n"),
-                 OPENDDS_STRING(converter).c_str()));
+                 converter.c_str()));
     }
 
     // We always return 1 if we know the publisher_id is no longer
