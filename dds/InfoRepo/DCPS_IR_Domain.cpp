@@ -1154,7 +1154,7 @@ void DCPS_IR_Domain::publish_subscription_bit(DCPS_IR_Subscription* subscription
         if (OpenDDS::DCPS::DCPS_debug_level > 0) {
           ACE_DEBUG((LM_DEBUG,
                      "(%P|%t) DCPS_IR_Domain::publish_subscription_bit: %C, handle %d.\n",
-                     OPENDDS_STRING(OpenDDS::DCPS::GuidConverter(OpenDDS::DCPS::bit_key_to_repo_id(data.key))).c_str(), handle));
+                     LogGuid((OpenDDS::DCPS::bit_key_to_repo_id(data.key))).c_str().conv_, handle));
         }
 
         bitSubscriptionDataWriter_->write(data,
