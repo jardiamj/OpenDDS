@@ -96,7 +96,6 @@ public:
         return;
       }
 
-      GuidConverter pub(sample.header_.publication_id_);
       DDS::Time_t ts = {sample.header_.source_timestamp_sec_,
                         sample.header_.source_timestamp_nanosec_};
       ACE_Time_Value atv = time_to_time_value(ts);
@@ -109,7 +108,7 @@ public:
         "timestamp = " << atv.usec() << " usec " << timestr << "\t"
         "byte order = " << sample.header_.byte_order_ << "\n\t"
         "length = " << sample.header_.message_length_ << "\n\t"
-        "publication = " << OPENDDS_STRING(pub) << "\n\t"
+        "publication = " << LogGuid(sample.header_.publication_id_) << "\n\t"
         "data.key = " << data.key << "\n\t"
         "data.value = " << data.value << "\n";
       ACE_DEBUG((LM_INFO, "%C", oss.str().c_str()));
