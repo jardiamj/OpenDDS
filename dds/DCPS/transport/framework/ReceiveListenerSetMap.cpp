@@ -64,7 +64,7 @@ OpenDDS::DCPS::ReceiveListenerSetMap::insert
                  ACE_TEXT("(%P|%t) ERROR: ReceiveListenerSetMap::insert: ")
                  ACE_TEXT("failed to remove (undo create) ReceiveListenerSet ")
                  ACE_TEXT("for publisher %C.\n"),
-                 OPENDDS_STRING(pub_converter).c_str()));
+                 pub_converter.c_str()));
     }
   }
 
@@ -123,11 +123,11 @@ OpenDDS::DCPS::ReceiveListenerSetMap::release_subscriber(RepoId publisher_id,
   ReceiveListenerSet_rch listener_set;
 
   if (OpenDDS::DCPS::find(map_, publisher_id, listener_set) != 0) {
-    GuidConverter converter(publisher_id);
+    LogGuid converter(publisher_id);
     ACE_ERROR((LM_ERROR,
                ACE_TEXT("(%P|%t) ERROR: ReciveListenerSetMap::release_subscriber: ")
                ACE_TEXT("publisher %C not found in map_.\n"),
-               OPENDDS_STRING(converter).c_str()));
+               converter.c_str()));
     // Return 1 to indicate that the publisher_id is no longer associated
     // with any subscribers at all.
     return 1;

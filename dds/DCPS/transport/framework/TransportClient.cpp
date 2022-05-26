@@ -454,15 +454,15 @@ TransportClient::PendingAssoc::initiate_connect(TransportClient* tc,
           if (res.success_ ) {
             VDBG_LVL((LM_DEBUG, ACE_TEXT("(%P|%t) PendingAssoc::initiate_connect - ")
                                 ACE_TEXT("between %C and remote %C success\n"),
-                                OPENDDS_STRING(local).c_str(),
-                                OPENDDS_STRING(remote).c_str()), 0);
+                                local.c_str(),
+                                remote.c_str()), 0);
             return true;
           }
 
           VDBG_LVL((LM_DEBUG, "(%P|%t) PendingAssoc::initiate_connect - "
                               "between %C and remote %C unsuccessful\n",
-                              OPENDDS_STRING(local).c_str(),
-                              OPENDDS_STRING(remote).c_str()), 0);
+                              local.c_str(),
+                              remote.c_str()), 0);
         }
 
         if (res.success_) {
@@ -475,16 +475,16 @@ TransportClient::PendingAssoc::initiate_connect(TransportClient* tc,
           } else {
             VDBG_LVL((LM_DEBUG, "(%P|%t) PendingAssoc::intiate_connect - "
                                 "resulting link from initiate_connect_i (local: %C to remote: %C) was nil\n",
-                                OPENDDS_STRING(local).c_str(),
-                                OPENDDS_STRING(remote).c_str()), 0);
+                                local.c_str(),
+                                remote.c_str()), 0);
           }
 
           return true;
         } else {
           VDBG_LVL((LM_DEBUG, "(%P|%t) PendingAssoc::intiate_connect - "
                               "result of initiate_connect_i (local: %C to remote: %C) was not success\n",
-                              OPENDDS_STRING(local).c_str(),
-                              OPENDDS_STRING(remote).c_str()), 0);
+                              local.c_str(),
+                              remote.c_str()), 0);
         }
       }
     }
@@ -546,7 +546,7 @@ TransportClient::use_datalink_i(const RepoId& remote_id_ref,
                           "TransportClient(%@) using datalink[%@] link is nil, since this is active side, initiate_connect to remote %C\n",
                           this,
                           link.in(),
-                          OPENDDS_STRING(peerId_conv).c_str()), 0);
+                          peerId_conv.c_str()), 0);
       return;
     }
 
@@ -554,13 +554,13 @@ TransportClient::use_datalink_i(const RepoId& remote_id_ref,
               "TransportClient(%@) using datalink[%@] link is nil, since this is passive side, connection to remote %C timed out\n",
               this,
               link.in(),
-              OPENDDS_STRING(peerId_conv).c_str()), 0);
+              peerId_conv.c_str()), 0);
   } else { // link is ready to use
     VDBG_LVL((LM_DEBUG, "(%P|%t) TransportClient::use_datalink_i "
               "TransportClient(%@) about to add_link[%@] to remote: %C\n",
               this,
               link.in(),
-              OPENDDS_STRING(peerId_conv).c_str()), 0);
+              peerId_conv.c_str()), 0);
 
     add_link(link, remote_id);
     ok = true;
