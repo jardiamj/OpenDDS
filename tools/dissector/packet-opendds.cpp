@@ -443,7 +443,7 @@ namespace OpenDDS
                   // Get Entry Value
                   const GUID_t &filter = sample.content_filter_entries_[i];
                   std::stringstream strm;
-                  strm << LogGuid(filter);
+                  strm << LogGuid(filter).c_str();
                   std::string guid = strm.str();
 
                   // Get Entry Size
