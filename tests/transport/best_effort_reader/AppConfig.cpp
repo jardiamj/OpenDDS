@@ -99,8 +99,8 @@ OpenDDS::DCPS::RepoId AppConfig::createID(long participantId, long key, CORBA::O
 }
 
 void AppConfig::to_cerr(const OpenDDS::DCPS::RepoId& remote, const OpenDDS::DCPS::RepoId& local, const std::string& txt) const {
-  std::cerr << LogGuid(remote).conv_ << " <- "
-            << LogGuid(local).conv_ << " " << txt << std::endl;
+  std::cerr << OpenDDS::DCPS::LogGuid(remote).conv_ << " <- "
+            << OpenDDS::DCPS::LogGuid(local).conv_ << " " << txt << std::endl;
 }
 
 void AppConfig::cleanup() {

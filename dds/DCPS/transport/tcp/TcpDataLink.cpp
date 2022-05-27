@@ -393,7 +393,7 @@ OpenDDS::DCPS::TcpDataLink::handle_send_request_ack(TransportQueueElement* eleme
 {
   if (Transport_debug_level >= 1) {
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) TcpDataLink::handle_send_request_ack(%@) sequence number %q, publication_id=%C\n"),
-      element, element->sequence().getValue(), LogGuid((element->publication_id()).c_str()));
+      element, element->sequence().getValue(), LogGuid(element->publication_id()).c_str()));
   }
   bool result = false;
   TcpConnection_rch connection(connection_.lock());
@@ -513,7 +513,7 @@ OpenDDS::DCPS::TcpDataLink::do_association_actions()
 
     for (OnStartCallbackMap::const_iterator it = on_start_callbacks_.begin(); it != on_start_callbacks_.end(); ++it) {
       for (RepoToClientMap::const_iterator it2 = it->second.begin(); it2 != it->second.end(); ++it2) {
-        if (LogGuid(it2->first).isReader()) {
+        if (GuidConverter(it2->first).isReader()) {
           to_call_and_send.push_back(std::make_pair(it2->first, it->first));
         }
       }

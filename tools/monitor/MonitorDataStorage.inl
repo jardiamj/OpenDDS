@@ -165,7 +165,7 @@ MonitorDataStorage::update<OpenDDS::DCPS::DomainParticipantReport>(
     ACE_TEXT("%s DomainParticipantReport, id: %C, domain: %d.\n"),
     remove? "removing": "processing",
     (data.dp_id == OpenDDS::DCPS::GUID_UNKNOWN)? "GUID_UNKNOWN":
-    LogGuid(data.dp_id).c_str(),
+    OpenDDS::DCPS::LogGuid(data.dp_id).c_str(),
     data.domain_id
   ));
 
@@ -245,7 +245,7 @@ MonitorDataStorage::update<OpenDDS::DCPS::TopicReport>(
     ACE_TEXT("%s TopicReport, id: %C, name: %C, type: %C.\n"),
     remove? "removing": "processing",
     (data.topic_id == OpenDDS::DCPS::GUID_UNKNOWN)? "GUID_UNKNOWN":
-    LogGuid(data.topic_id).c_str(),
+    OpenDDS::DCPS::LogGuid(data.topic_id).c_str(),
     (const char*)data.topic_name,
     (const char*)data.type_name
   ));
@@ -331,7 +331,7 @@ MonitorDataStorage::update<OpenDDS::DCPS::PublisherReport>(
     ACE_TEXT("%s PublisherReport, id: %C, handle: %d, transport: 0x%x.\n"),
     remove? "removing": "processing",
     (data.dp_id == OpenDDS::DCPS::GUID_UNKNOWN)? "GUID_UNKNOWN":
-    LogGuid(data.dp_id).c_str(),
+    OpenDDS::DCPS::LogGuid(data.dp_id).c_str(),
     data.handle,
     data.transport_id
   ));
@@ -407,7 +407,7 @@ MonitorDataStorage::update<OpenDDS::DCPS::SubscriberReport>(
     ACE_TEXT("%s SubscriberReport, id: %C, handle: %d, transport: 0x%x.\n"),
     remove? "removing": "processing",
     (data.dp_id == OpenDDS::DCPS::GUID_UNKNOWN)? "GUID_UNKNOWN":
-    LogGuid(data.dp_id).c_str(),
+    OpenDDS::DCPS::LogGuid(data.dp_id).c_str(),
     data.handle,
     data.transport_id
   ));
@@ -484,15 +484,14 @@ MonitorDataStorage::update<OpenDDS::DCPS::DataWriterReport>(
   //    NVPSeq                 values;
   //  };
 
-
   ACE_DEBUG((LM_DEBUG,
     ACE_TEXT("(%P|%t) MonitorDataStorage::update() - ")
     ACE_TEXT("%s DataWriterReport, id: %C, topic: %C.\n"),
     remove? "removing": "processing",
     (data.dw_id == OpenDDS::DCPS::GUID_UNKNOWN)? "GUID_UNKNOWN":
-    LogGuid(data.dw_id).c_str(),
+    OpenDDS::DCPS::LogGuid(data.dw_id).c_str(),
     (data.topic_id == OpenDDS::DCPS::GUID_UNKNOWN)? "GUID_UNKNOWN":
-    LogGuid(data.topic_id).c_str()
+    OpenDDS::DCPS::LogGuid(data.topic_id).c_str()
   ));
 
   // Retain knowledge of node insertions, updates, and deletions.
@@ -533,7 +532,7 @@ MonitorDataStorage::update<OpenDDS::DCPS::DataWriterReport>(
   for( int index = 0; index < size; ++index) {
     // Create a child node to hold the association if its not already in
     // the tree.
-    QString reader( LogGuid(data.associations[ index].dr_id).c_str());
+    QString reader(OpenDDS::DCPS::LogGuid(data.associations[index].dr_id).c_str());
     int row = node->indexOf( 1, reader);
     if( row == -1) {
       // New data, insert.
@@ -578,7 +577,7 @@ MonitorDataStorage::update<OpenDDS::DCPS::DataWriterPeriodicReport>(
     ACE_TEXT("%s DataWriterPeriodicReport, id: %C.\n"),
     remove? "removing": "processing",
     (data.dw_id == OpenDDS::DCPS::GUID_UNKNOWN)? "GUID_UNKNOWN":
-    LogGuid(data.dw_id).c_str()
+    OpenDDS::DCPS::LogGuid(data.dw_id).c_str()
   ));
 
   // Ignore remove flag for these samples - the static reports control
@@ -664,7 +663,7 @@ MonitorDataStorage::update<OpenDDS::DCPS::DataWriterPeriodicReport>(
     // Create a child node to hold the association if its not already in
     // the tree.
     TreeNode* readerNode = 0;
-    QString reader( LogGuid(data.associations[ index].dr_id).c_str());
+    QString reader( OpenDDS::DCPS::LogGuid(data.associations[index].dr_id).c_str());
     int row = node->indexOf( 1, reader);
     if( row == -1) {
       // New data, insert.
@@ -727,9 +726,9 @@ MonitorDataStorage::update<OpenDDS::DCPS::DataReaderReport>(
     ACE_TEXT("%s DataReaderReport, id: %C, topic: %C.\n"),
     remove? "removing": "processing",
     (data.dr_id == OpenDDS::DCPS::GUID_UNKNOWN)? "GUID_UNKNOWN":
-    LogGuid(data.dr_id).c_str(),
+    OpenDDS::DCPS::LogGuid(data.dr_id).c_str(),
     (data.topic_id == OpenDDS::DCPS::GUID_UNKNOWN)? "GUID_UNKNOWN":
-    LogGuid(data.topic_id).c_str()
+    OpenDDS::DCPS::LogGuid(data.topic_id).c_str()
   ));
 
   // Retain knowledge of node insertions, updates, and deletions.
@@ -770,7 +769,7 @@ MonitorDataStorage::update<OpenDDS::DCPS::DataReaderReport>(
   for( int index = 0; index < size; ++index) {
     // Create a child node to hold the association if its not already in
     // the tree.
-    QString writer( LogGuid(data.associations[ index].dw_id).c_str());
+    QString writer( OpenDDS::DCPS::LogGuid(data.associations[index].dw_id).c_str());
     int row = node->indexOf( 1, writer);
     if( row == -1) {
       // New data, insert.
@@ -812,7 +811,7 @@ MonitorDataStorage::update<OpenDDS::DCPS::DataReaderPeriodicReport>(
     ACE_TEXT("%s DataReaderPeriodicReport, id: %C.\n"),
     remove? "removing": "processing",
     (data.dr_id == OpenDDS::DCPS::GUID_UNKNOWN)? "GUID_UNKNOWN":
-    LogGuid(data.dr_id).c_str()
+    OpenDDS::DCPS::LogGuid(data.dr_id).c_str()
   ));
 
   // Ignore remove flag for these samples - the static reports control
@@ -842,7 +841,7 @@ MonitorDataStorage::update<OpenDDS::DCPS::DataReaderPeriodicReport>(
     // Create a child node to hold the association if its not already in
     // the tree.
     TreeNode* writerNode = 0;
-    QString writer( LogGuid(data.associations[ index].dw_id).c_str());
+    QString writer( OpenDDS::DCPS::LogGuid(data.associations[index].dw_id).c_str());
     int row = node->indexOf( 1, writer);
     if( row == -1) {
       // New data, insert.
@@ -962,7 +961,7 @@ MonitorDataStorage::update<DDS::ParticipantBuiltinTopicData>(
     ACE_TEXT("[0x%x, 0x%x, 0x%x].\n"),
     remove? "removing": "processing",
     (id == OpenDDS::DCPS::GUID_UNKNOWN)? "GUID_UNKNOWN":
-    LogGuid(id).c_str(),
+    OpenDDS::DCPS::LogGuid(id).c_str(),
     data.key.value[0], data.key.value[1], data.key.value[2]
   ));
 
@@ -1037,7 +1036,7 @@ MonitorDataStorage::update<DDS::TopicBuiltinTopicData>(
     ACE_TEXT("[0x%x, 0x%x, 0x%x].\n"),
     remove? "removing": "processing",
     (id == OpenDDS::DCPS::GUID_UNKNOWN)? "GUID_UNKNOWN":
-    LogGuid(id).c_str(),
+    OpenDDS::DCPS::LogGuid(id).c_str(),
     data.key.value[0], data.key.value[1], data.key.value[2]
   ));
 
@@ -1121,7 +1120,7 @@ MonitorDataStorage::update<DDS::PublicationBuiltinTopicData>(
     ACE_TEXT("[0x%x, 0x%x, 0x%x].\n"),
     remove? "removing": "processing",
     (id == OpenDDS::DCPS::GUID_UNKNOWN)? "GUID_UNKNOWN":
-    LogGuid(id).c_str(),
+    OpenDDS::DCPS::LogGuid(id).c_str(),
     data.key.value[0], data.key.value[1], data.key.value[2]
   ));
 
@@ -1203,7 +1202,7 @@ MonitorDataStorage::update<DDS::SubscriptionBuiltinTopicData>(
     ACE_TEXT("[0x%x, 0x%x, 0x%x].\n"),
     remove? "removing": "processing",
     (id == OpenDDS::DCPS::GUID_UNKNOWN)? "GUID_UNKNOWN":
-    LogGuid(id).c_str(),
+    OpenDDS::DCPS::LogGuid(id).c_str(),
     data.key.value[0], data.key.value[1], data.key.value[2]
   ));
 
