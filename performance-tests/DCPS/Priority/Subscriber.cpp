@@ -387,7 +387,7 @@ Subscriber::rawData( std::ostream& str) const
          = readerImpl->raw_latency_statistics().begin();
        current != readerImpl->raw_latency_statistics().end();
        ++current, ++index) {
-    str << std::endl << "  Writer[ " << LogGuid(current->first) << "]" << std::endl;
+    str << std::endl << "  Writer[ " << LogGuid(current->first).conv_ << "]" << std::endl;
 #ifndef OPENDDS_SAFETY_PROFILE
     current->second.raw_data( str);
 #endif //OPENDDS_SAFETY_PROFILE
