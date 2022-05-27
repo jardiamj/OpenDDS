@@ -59,7 +59,7 @@ void SimpleDataReader::data_received(const ReceivedDataSample& sample)
 
   if (data.key == 99) {
     ACE_DEBUG((LM_INFO, ACE_TEXT("%C received terminating sample\n"),
-      LogGuid(get_repo_id()).c_str().conv_));
+      LogGuid(get_repo_id()).c_str()));
     done_ = true;
     return;
   }
