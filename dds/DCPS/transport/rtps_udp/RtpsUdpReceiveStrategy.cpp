@@ -473,7 +473,7 @@ RtpsUdpReceiveStrategy::deliver_sample_i(ReceivedDataSample& sample,
         bool first = true;
         RepoIdSet::iterator iter = readers_selected_.begin();
         while (iter != readers_selected_.end()) {
-          included_ids += (first ? "" : "\n") + OPENDDS_STRING(LogGuid(*iter));
+          included_ids += (first ? "" : "\n") + LogGuid(*iter).conv_;
           first = false;
           ++iter;
         }
@@ -481,7 +481,7 @@ RtpsUdpReceiveStrategy::deliver_sample_i(ReceivedDataSample& sample,
         first = true;
         RepoIdSet::iterator iter2 = this->readers_withheld_.begin();
         while (iter2 != readers_withheld_.end()) {
-          excluded_ids += (first ? "" : "\n") + OPENDDS_STRING(LogGuid(*iter2));
+          excluded_ids += (first ? "" : "\n") + LogGuid(*iter2).conv_;
           first = false;
           ++iter2;
         }
