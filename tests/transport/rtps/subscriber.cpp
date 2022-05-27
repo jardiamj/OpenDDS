@@ -96,7 +96,7 @@ public:
         return;
       }
 
-      GuidConverter pub(sample.header_.publication_id);
+      GuidConverter pub(sample.header_.publication_id_);
       DDS::Time_t ts = {sample.header_.source_timestamp_sec_,
                         sample.header_.source_timestamp_nanosec_};
       ACE_Time_Value atv = time_to_time_value(ts);
