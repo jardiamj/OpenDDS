@@ -38,12 +38,12 @@ DataWriterRemoteImpl::add_association(const RepoId& yourId,
                                       bool active)
 {
   if (DCPS_debug_level) {
-    LogGuid writer_converter(yourId);
-    LogGuid reader_converter(reader.readerId);
+    LogGuid writer_log(yourId);
+    LogGuid reader_log(reader.readerId);
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) DataWriterRemoteImpl::add_association - ")
                ACE_TEXT("local %C remote %C\n"),
-               writer_converter.c_str(),
-               reader_converter.c_str()));
+               writer_log.c_str(),
+               reader_log.c_str()));
   }
 
   // the local copy of parent_ is necessary to prevent race condition
