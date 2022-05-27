@@ -134,7 +134,7 @@ void SimpleDataReader::data_received(const ReceivedDataSample& sample)
     "seq# = "        << sample.header_.sequence_.getValue() << "\n\t"
     "byte order = "  << sample.header_.byte_order_ << "\n\t"
     "length = "      << sample.header_.message_length_ << "\n\t"
-    "publication = " << LogGuid(sample.header_.publication_id_) << "\n\t"
+    "publication = " << LogGuid(sample.header_.publication_id_).conv_ << "\n\t"
     "data.key = "    << data.key << "\n\t"
     "data.value = "  << data.value << "\n";
   ACE_DEBUG((LM_INFO, ACE_TEXT("%C"), oss.str().c_str()));

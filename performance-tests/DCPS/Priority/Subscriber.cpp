@@ -353,7 +353,7 @@ operator<<( std::ostream& str, const Test::Subscriber& value)
   value.reader_->get_latency_stats( statistics);
   str << " --- statistical summary ---" << std::endl;
   for( unsigned long index = 0; index < statistics.length(); ++index) {
-    str << "  Writer[ " << LogGuid(statistics[ index].publication) << "]" << std::endl;
+    str << "  Writer[ " << LogGuid(statistics[ index].publication).conv_ << "]" << std::endl;
     str << "     samples: " << statistics[ index].n << std::endl;
     str << "        mean: " << statistics[ index].mean << std::endl;
     str << "     minimum: " << statistics[ index].minimum << std::endl;

@@ -108,7 +108,7 @@ public:
         "timestamp = " << atv.usec() << " usec " << timestr << "\t"
         "byte order = " << sample.header_.byte_order_ << "\n\t"
         "length = " << sample.header_.message_length_ << "\n\t"
-        "publication = " << LogGuid(sample.header_.publication_id_) << "\n\t"
+        "publication = " << LogGuid(sample.header_.publication_id_).conv_ << "\n\t"
         "data.key = " << data.key << "\n\t"
         "data.value = " << data.value << "\n";
       ACE_DEBUG((LM_INFO, "%C", oss.str().c_str()));
